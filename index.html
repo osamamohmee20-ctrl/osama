@@ -1,224 +1,78 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DWLH | SYSTEM SECURED BY OSAMA</title>
+    <title>SECURE ACCESS | Dx1337</title>
     <style>
-        body {
-            background-color: #000;
-            color: #ff0000;
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
-
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            opacity: 0.2;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            padding: 40px;
-            border: 2px solid #ff0000;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 30px #ff0000;
-            width: 85%;
-            max-width: 650px;
-            transition: all 0.8s ease-in-out;
-        }
-
-        h1 {
-            font-size: 3rem;
-            letter-spacing: 8px;
-            animation: glitch 1s infinite;
-        }
-
-        @keyframes glitch {
-            0% { transform: skew(2deg); text-shadow: 2px 0 #fff; }
-            50% { transform: skew(-2deg); text-shadow: -2px 0 #ff0000; }
-            100% { transform: skew(0deg); }
-        }
-
-        .btn {
-            margin-top: 30px;
-            padding: 15px 40px;
-            border: 2px solid #ff0000;
-            background: transparent;
-            color: #ff0000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.4s;
-            font-family: inherit;
-        }
-
-        .btn:hover {
-            background: #ff0000;
-            color: #000;
-            box-shadow: 0 0 20px #ff0000;
-        }
-
-        #console {
-            display: none;
-            text-align: left;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            height: 200px;
-            overflow-y: hidden;
-            border-top: 1px solid #440000;
-            padding-top: 15px;
-        }
-
-        #socials {
-            display: none;
-            flex-direction: column;
-            gap: 15px;
-            opacity: 0;
-        }
-
-        .social-btn {
-            text-decoration: none;
-            color: #fff;
-            border: 1px solid #ff0000;
-            padding: 12px;
-            background: rgba(255, 0, 0, 0.1);
-            transition: 0.3s;
-        }
-
-        .social-btn:hover {
-            background: rgba(255, 0, 0, 0.4);
-            transform: scale(1.05);
-        }
-
-        #viewer-count {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #ff0000;
-            padding: 8px 15px;
-            color: #ff0000;
-            font-size: 0.85rem;
-            border-radius: 5px;
-            z-index: 100;
-            box-shadow: 0 0 10px #ff0000;
-        }
-
-        .fade-out { opacity: 0; transform: scale(0.9); }
-        .fade-in { opacity: 1 !important; display: flex !important; transition: opacity 1s; }
+        body { margin: 0; background: #000; color: #ff0000; font-family: 'Courier New', monospace; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }
+        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 99; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #00d4ff; letter-spacing: 3px; }
+        .text-container { font-size: 1.8rem; max-width: 80%; text-align: center; line-height: 1.5; }
+        #content-wrapper { display: none; flex-direction: column; align-items: center; }
+        #masons-img { width: 350px; opacity: 0; transition: opacity 2s ease-in; filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(10) contrast(1.5); }
+        .footer-text { margin-top: 30px; opacity: 0; transition: opacity 2s ease-in; color: #ff0000; font-size: 1.2rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-<canvas id="matrix"></canvas>
+    <div id="overlay" onclick="start()">[ CLICK TO INITIALIZE SYSTEM ]</div>
+    
+    <div class="text-container" id="typewriter"></div>
 
-<audio id="hackerAudio">
-    <source src="morse.wav" type="audio/wav">
-</audio>
-
-<div class="container" id="box">
-    <div id="phase1">
-        <h1>ACCESS DENIED</h1>
-        <p style="color: #fff;">UNAUTHORIZED ACCESS TO DWLH PROTOCOL</p>
-        <button class="btn" onclick="startHack()">TRY AGAIN</button>
+    <div id="content-wrapper">
+        <img src="masons.jpg" id="masons-img">
+        <div class="footer-text" id="footer">This website was created by Osama</div>
     </div>
 
-    <div id="console"></div>
-
-    <div id="socials">
-        <h2 style="color: #fff;">DATA HARVEST COMPLETE</h2>
-        <p>SYSTEM OWNED BY: <span style="color: #ff0000; font-weight: bold;">OSAMA</span></p>
-        <a href="https://www.youtube.com/@%D8%B4%D8%B7%D8%AD%D9%87-1" target="_blank" class="social-btn">YouTube: شطحه</a>
-        <a href="https://www.tiktok.com/@9a2o" target="_blank" class="social-btn">TikTok: @9a2o</a>
-        <a href="http://discordapp.com/users/1137356245150470194" target="_blank" class="social-btn">Discord Profile</a>
-    </div>
-</div>
-
-<div id="viewer-count">
-    👁️ <span id="count-number">0</span>
-</div>
-
-<script>
-    // --- Matrix Effect ---
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const letters = "01010101010101";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#ff0000";
-        ctx.font = fontSize + "px arial";
-        drops.forEach((y, i) => {
-            const text = letters[Math.floor(Math.random() * letters.length)];
-            ctx.fillText(text, i * fontSize, y * fontSize);
-            if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
-        });
-    }
-    setInterval(draw, 33);
-
-    const logs = [
-        "> BYPASSING FIREWALL...",
-        "> INJECTING EXPLOIT...",
-        "> ACCESSING SYSTEM FILES...",
-        "> STEALING BROWSER COOKIES...",
-        "> UPLOADING PERSONAL DATA...",
-        "> DISCONNECTING SECURITY...",
-        "> ENCRYPTING DRIVE C:/"
-    ];
-
-    // --- نظام العداد الجديد ---
-    let counterValue = parseInt(localStorage.getItem('fake_counter')) || 0;
-
-    function startHack() {
-        const audio = document.getElementById('hackerAudio');
-        audio.play().catch(e => console.log("Audio play failed"));
-
-        // تحديث العداد (محاكاة ذكية لحساب الضغطات الحقيقية)
-        counterValue++;
-        localStorage.setItem('fake_counter', counterValue);
-        document.getElementById('count-number').innerText = counterValue;
-
-        const p1 = document.getElementById('phase1');
-        p1.classList.add('fade-out');
-        
-        setTimeout(() => {
-            p1.style.display = 'none';
-            document.getElementById('console').style.display = 'block';
-            runLogs(0);
-        }, 800);
-    }
-
-    function runLogs(index) {
-        if (index < logs.length) {
-            document.getElementById('console').innerHTML += `<p>${logs[index]}</p>`;
-            setTimeout(() => runLogs(index + 1), 500);
-        } else {
-            showFinal();
+    <script>
+        // دالة الصوت الرقمي
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClick() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.frequency.value = 800;
+            gain.gain.value = 0.1;
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
         }
-    }
 
-    function showFinal() {
-        document.getElementById('console').style.display = 'none';
-        document.getElementById('socials').classList.add('fade-in');
-        document.getElementById('viewer-count').style.display = 'block';
-    }
-</script>
+        const text = "This website is used for cybersecurity purposes, so please be careful when using it.";
+        const container = document.getElementById('typewriter');
 
+        // القفل: المراقبة الدائمة لملء الشاشة
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                // إذا خرج، يرجع يدخله فوراً
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
+        });
+
+        function start() {
+            // محاولة أولية لملء الشاشة
+            document.documentElement.requestFullscreen().catch(() => {});
+            document.getElementById('overlay').style.display = 'none';
+            typeWriter(0);
+        }
+
+        function typeWriter(i) {
+            if (i < text.length) {
+                container.innerHTML += text.charAt(i);
+                playClick();
+                setTimeout(() => typeWriter(i + 1), 50); 
+            } else {
+                setTimeout(showLogo, 5000);
+            }
+        }
+
+        function showLogo() {
+            container.style.display = 'none';
+            document.getElementById('content-wrapper').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('masons-img').style.opacity = '1';
+                document.getElementById('footer').style.opacity = '1';
+            }, 100);
+        }
+    </script>
 </body>
 </html>
