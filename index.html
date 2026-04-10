@@ -1,78 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Security Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <title>DWLH | SYSTEM SECURED BY OSAMA</title>
     <style>
+        /* إعدادات الصفحة الأساسية */
         body {
-            background-color: black;
-            color: #FF0000;
-            font-family: 'VT323', monospace;
+            background-color: #000;
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
             text-align: center;
-            cursor: pointer; /* ليشعر المستخدم أنه يجب الضغط */
+        }
+
+        /* تأثير Matrix باللون الأحمر */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0.2;
         }
 
         .container {
-            display: flex;
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+            border: 2px solid #ff0000;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 30px #ff0000;
+            width: 85%;
+            max-width: 650px;
+            transition: all 0.8s ease-in-out; /* انتقال ناعم */
+        }
+
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 8px;
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: skew(2deg); text-shadow: 2px 0 #fff; }
+            50% { transform: skew(-2deg); text-shadow: -2px 0 #ff0000; }
+            100% { transform: skew(0deg); }
+        }
+
+        /* زر TRY AGAIN */
+        .btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            border: 2px solid #ff0000;
+            background: transparent;
+            color: #ff0000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 20px #ff0000;
+        }
+
+        /* الكونسول (سجلات النظام) */
+        #console {
+            display: none;
+            text-align: left;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            height: 200px;
+            overflow-y: hidden;
+            border-top: 1px solid #440000;
+            padding-top: 15px;
+        }
+
+        /* روابط التواصل الاجتماعي */
+        #socials {
+            display: none;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
+            opacity: 0;
+            transition: opacity 1s;
         }
 
-        .warning {
-            font-size: 80px;
-            margin: 0;
-            text-shadow: 0 0 10px #FF0000; /* تأثير توهج أحمر */
+        .social-btn {
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid #ff0000;
+            padding: 12px;
+            background: rgba(255, 0, 0, 0.1);
+            transition: 0.3s;
         }
 
-        .description {
-            font-size: 24px;
-            margin: 0;
-            margin-bottom: 20px;
+        .social-btn:hover {
+            background: rgba(255, 0, 0, 0.4);
+            transform: scale(1.05);
         }
 
-        .made-by {
-            font-size: 16px;
-            margin: 0;
-            opacity: 0.8;
-        }
+        .fade-out { opacity: 0; transform: scale(0.9); }
+        .fade-in { opacity: 1 !important; display: flex !important; }
     </style>
 </head>
 <body>
 
-    <audio id="hackerAudio" loop>
-        <source src="morse.wav" type="audio/wav">
-        Your browser does not support the audio element.
-    </audio>
+<canvas id="matrix"></canvas>
 
-    <div class="container">
-        <h1 class="warning">WARNING</h1>
-        <p class="description">This website is used for cybersecurity purposes, so please be careful when using it.</p>
-        <p class="made-by">Made By: Osama</p>
+<audio id="hackerAudio">
+    <source src="morse.wav" type="audio/wav">
+</audio>
+
+<div class="container" id="box">
+    <div id="phase1">
+        <h1>ACCESS DENIED</h1>
+        <p style="color: #fff;">UNAUTHORIZED ACCESS TO DWLH PROTOCOL</p>
+        <button class="btn" onclick="startHack()">TRY AGAIN</button>
     </div>
 
-    <script>
-        // سكريبت لتشغيل الصوت عند أول ضغطة في الصفحة لتجاوز قيود المتصفح
-        document.body.addEventListener('click', function() {
-            var audio = document.getElementById('hackerAudio');
-            if (audio.paused) {
-                audio.play();
-            }
-        });
+    <div id="console"></div>
 
-        // محاولة تشغيل تلقائي (قد لا تعمل في كل المتصفحات بدون تفاعل)
-        window.onload = function() {
-            var audio = document.getElementById('hackerAudio');
-            audio.play().catch(function(error) {
-                console.log("Autoplay blocked. Waiting for user interaction.");
-            });
+    <div id="socials">
+        <h2 style="color: #fff;">DATA HARVEST COMPLETE</h2>
+        <p>SYSTEM OWNED BY: <span style="color: #ff0000; font-weight: bold;">OSAMA</span></p>
+        <a href="https://www.youtube.com/@%D8%B4%D8%B7%D8%AD%D9%87-1" target="_blank" class="social-btn">YouTube: شطحه</a>
+        <a href="https://www.tiktok.com/@9a2o" target="_blank" class="social-btn">TikTok: @9a2o</a>
+        <a href="http://discordapp.com/users/1137356245150470194" target="_blank" class="social-btn">Discord Profile</a>
+    </div>
+</div>
+
+<script>
+    // --- Matrix Effect ---
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const letters = "01010101010101";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#ff0000";
+        ctx.font = fontSize + "px arial";
+        drops.forEach((y, i) => {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(text, i * fontSize, y * fontSize);
+            if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+    setInterval(draw, 33);
+
+    // --- Hack Logic ---
+    const logs = [
+        "> BYPASSING FIREWALL...",
+        "> INJECTING EXPLOIT...",
+        "> ACCESSING SYSTEM FILES...",
+        "> STEALING BROWSER COOKIES...",
+        "> UPLOADING PERSONAL DATA...",
+        "> DISCONNECTING SECURITY...",
+        "> ENCRYPTING DRIVE C:/"
+    ];
+
+    function startHack() {
+        // تشغيل الصوت
+        document.getElementById('hackerAudio').play();
+        
+        // إخفاء المرحلة الأولى مع انتقال
+        const p1 = document.getElementById('phase1');
+        p1.classList.add('fade-out');
+        
+        setTimeout(() => {
+            p1.style.display = 'none';
+            const consoleBox = document.getElementById('console');
+            consoleBox.style.display = 'block';
+            runLogs(0);
+        }, 800);
+    }
+
+    function runLogs(index) {
+        if (index < logs.length) {
+            const consoleBox = document.getElementById('console');
+            consoleBox.innerHTML += `<p>${logs[index]}</p>`;
+            setTimeout(() => runLogs(index + 1), 600);
+        } else {
+            showFinal();
         }
-    </script>
+    }
+
+    function showFinal() {
+        document.getElementById('console').style.display = 'none';
+        const socials = document.getElementById('socials');
+        socials.classList.add('fade-in');
+    }
+</script>
+
 </body>
 </html>
