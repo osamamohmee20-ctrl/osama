@@ -99,7 +99,6 @@
             transform: scale(1.05);
         }
 
-        /* ستايل عداد العيون تحت يمين */
         #viewer-count {
             display: none;
             position: fixed;
@@ -173,7 +172,6 @@
     }
     setInterval(draw, 33);
 
-    // --- Hack Logic ---
     const logs = [
         "> BYPASSING FIREWALL...",
         "> INJECTING EXPLOIT...",
@@ -184,33 +182,31 @@
         "> ENCRYPTING DRIVE C:/"
     ];
 
+    // --- نظام العداد الجديد ---
+    let counterValue = parseInt(localStorage.getItem('fake_counter')) || 0;
+
     function startHack() {
-        // تشغيل الصوت
         const audio = document.getElementById('hackerAudio');
         audio.play().catch(e => console.log("Audio play failed"));
 
-        // زيادة العداد مخفياً عند الضغط فقط
-        fetch('https://api.countapi.xyz/hit/osama_dwlh_final/clicks')
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('count-number').innerText = data.value;
-            });
+        // تحديث العداد (محاكاة ذكية لحساب الضغطات الحقيقية)
+        counterValue++;
+        localStorage.setItem('fake_counter', counterValue);
+        document.getElementById('count-number').innerText = counterValue;
 
         const p1 = document.getElementById('phase1');
         p1.classList.add('fade-out');
         
         setTimeout(() => {
             p1.style.display = 'none';
-            const consoleBox = document.getElementById('console');
-            consoleBox.style.display = 'block';
+            document.getElementById('console').style.display = 'block';
             runLogs(0);
         }, 800);
     }
 
     function runLogs(index) {
         if (index < logs.length) {
-            const consoleBox = document.getElementById('console');
-            consoleBox.innerHTML += `<p>${logs[index]}</p>`;
+            document.getElementById('console').innerHTML += `<p>${logs[index]}</p>`;
             setTimeout(() => runLogs(index + 1), 500);
         } else {
             showFinal();
@@ -219,9 +215,7 @@
 
     function showFinal() {
         document.getElementById('console').style.display = 'none';
-        const socials = document.getElementById('socials');
-        socials.classList.add('fade-in');
-        // إظهار العداد في الصفحة النهائية فقط
+        document.getElementById('socials').classList.add('fade-in');
         document.getElementById('viewer-count').style.display = 'block';
     }
 </script>
