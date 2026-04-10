@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Security Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: #FF0000;
+            font-family: 'VT323', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            cursor: pointer; /* ليشعر المستخدم أنه يجب الضغط */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .warning {
+            font-size: 80px;
+            margin: 0;
+            text-shadow: 0 0 10px #FF0000; /* تأثير توهج أحمر */
+        }
+
+        .description {
+            font-size: 24px;
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .made-by {
+            font-size: 16px;
+            margin: 0;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="hackerAudio" loop>
+        <source src="morse.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container">
+        <h1 class="warning">WARNING</h1>
+        <p class="description">This website is used for cybersecurity purposes, so please be careful when using it.</p>
+        <p class="made-by">Made By: Osama</p>
+    </div>
+
+    <script>
+        // سكريبت لتشغيل الصوت عند أول ضغطة في الصفحة لتجاوز قيود المتصفح
+        document.body.addEventListener('click', function() {
+            var audio = document.getElementById('hackerAudio');
+            if (audio.paused) {
+                audio.play();
+            }
+        });
+
+        // محاولة تشغيل تلقائي (قد لا تعمل في كل المتصفحات بدون تفاعل)
+        window.onload = function() {
+            var audio = document.getElementById('hackerAudio');
+            audio.play().catch(function(error) {
+                console.log("Autoplay blocked. Waiting for user interaction.");
+            });
+        }
+    </script>
+</body>
+</html>
