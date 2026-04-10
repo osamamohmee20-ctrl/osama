@@ -5,16 +5,17 @@
     <title>SECURE ACCESS | Dx1337</title>
     <style>
         body { margin: 0; background: #000; color: #ff0000; font-family: 'Courier New', monospace; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }
-        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 99; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #00d4ff; letter-spacing: 3px; }
-        .text-container { font-size: 1.8rem; max-width: 80%; text-align: center; line-height: 1.5; }
+        /* جعل الأوفرلي يغطي كل شيء ويستجيب للضغط */
+        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #00d4ff; font-size: 1.5rem; letter-spacing: 2px; }
+        .text-container { font-size: 1.8rem; max-width: 80%; text-align: center; line-height: 1.5; color: #ff0000; }
         #content-wrapper { display: none; flex-direction: column; align-items: center; }
         #masons-img { width: 350px; opacity: 0; transition: opacity 2s ease-in; filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(10) contrast(1.5); }
-        .footer-text { margin-top: 30px; opacity: 0; transition: opacity 2s ease-in; color: #ff0000; font-size: 1.2rem; letter-spacing: 2px; }
+        .footer-text { margin-top: 30px; opacity: 0; transition: opacity 2s ease-in; color: #ff0000; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
-    <div id="overlay" onclick="start()">[ CLICK TO INITIALIZE SYSTEM ]</div>
+    <div id="overlay" onclick="initialize()">[ CLICK TO INITIALIZE SYSTEM ]</div>
     
     <div class="text-container" id="typewriter"></div>
 
@@ -24,9 +25,11 @@
     </div>
 
     <script>
-        // دالة الصوت الرقمي
+        // استخدام الصوت المدمج (لضمان عمله في iOS)
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
         function playClick() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
@@ -40,18 +43,15 @@
         const text = "This website is used for cybersecurity purposes, so please be careful when using it.";
         const container = document.getElementById('typewriter');
 
-        // القفل: المراقبة الدائمة لملء الشاشة
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                // إذا خرج، يرجع يدخله فوراً
-                document.documentElement.requestFullscreen().catch(() => {});
-            }
-        });
-
-        function start() {
-            // محاولة أولية لملء الشاشة
-            document.documentElement.requestFullscreen().catch(() => {});
+        function initialize() {
+            // 1. طلب ملء الشاشة فوراً
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+            
+            // 2. إخفاء الأوفرلي
             document.getElementById('overlay').style.display = 'none';
+            
+            // 3. بدء الكتابة فوراً
             typeWriter(0);
         }
 
@@ -59,7 +59,7 @@
             if (i < text.length) {
                 container.innerHTML += text.charAt(i);
                 playClick();
-                setTimeout(() => typeWriter(i + 1), 50); 
+                setTimeout(() => typeWriter(i + 1), 60); 
             } else {
                 setTimeout(showLogo, 5000);
             }
