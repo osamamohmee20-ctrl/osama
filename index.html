@@ -2,15 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SECURE ACCESS</title>
+    <title>SECURE ACCESS </title>
     <style>
-        body { margin: 0; background: #000; color: #ff0000; font-family: 'Courier New', monospace; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }
-        /* جعل الأوفرلي يغطي كل شيء ويستجيب للضغط */
-        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #00d4ff; font-size: 1.5rem; letter-spacing: 2px; }
+        body { margin: 0; background: #000; color: #ff0000; font-family: 'Courier New', monospace; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #00d4ff; letter-spacing: 3px; }
         .text-container { font-size: 1.8rem; max-width: 80%; text-align: center; line-height: 1.5; color: #ff0000; }
-        #content-wrapper { display: none; flex-direction: column; align-items: center; }
+        
+        /* الصورة مثبتة في المنتصف تماماً */
+        #content-wrapper { display: none; width: 100%; height: 100%; justify-content: center; align-items: center; position: relative; flex-direction: column; }
         #masons-img { width: 350px; opacity: 0; transition: opacity 2s ease-in; filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(10) contrast(1.5); }
-        .footer-text { margin-top: 30px; opacity: 0; transition: opacity 2s ease-in; color: #ff0000; font-size: 1.2rem; }
+        
+        /* الروابط مثبتة على يمين الصورة */
+        #social-links { position: absolute; right: 15%; display: flex; flex-direction: column; gap: 30px; }
+        
+        /* تأثيرات الـ Hover المحدثة للروابط */
+        .social-link { 
+            color: #ff0000; /* اللون الأساسي أحمر */
+            text-decoration: none; 
+            font-size: 1.5rem; 
+            transition: all 0.3s ease-in-out; /* حركة سلسة */
+            display: inline-block; /* ضروري لتأثير التكبير */
+        }
+        
+        .social-link:hover { 
+            color: #00d4ff; /* يتغير للأزرق اللبني عند وضع الماوس */
+            transform: scale(1.1); /* يكبر بنسبة 10% */
+            text-decoration: underline; /* يظهر خط تحته */
+        }
+        
+        /* جملة التوقيع مرفوعة للأعلى */
+        .footer-text { position: absolute; bottom: 80px; /* رفعناها للأعلى (كانت 30px) */ opacity: 0; transition: opacity 2s ease-in; color: #ff0000; font-size: 1.2rem; }
     </style>
 </head>
 <body>
@@ -21,13 +42,18 @@
 
     <div id="content-wrapper">
         <img src="masons.jpg" id="masons-img">
-        <div class="footer-text" id="footer">This website was created by Osama</div>
+        
+        <div id="social-links">
+            <a href="https://www.tiktok.com/@9a2o" target="_blank" class="social-link">TikTok</a>
+            <a href="https://www.youtube.com/@%D8%B4%D8%B7%D8%AD%D9%87-1" target="_blank" class="social-link">YouTube</a>
+            <a href="https://discordapp.com/users/1137356245150470194" target="_blank" class="social-link">Discord</a>
+        </div>
     </div>
 
+    <div class="footer-text" id="footer">This website was created by Osama</div>
+    
     <script>
-        // استخدام الصوت المدمج (لضمان عمله في iOS)
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
         function playClick() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
@@ -44,14 +70,9 @@
         const container = document.getElementById('typewriter');
 
         function initialize() {
-            // 1. طلب ملء الشاشة فوراً
             const elem = document.documentElement;
             if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
-            
-            // 2. إخفاء الأوفرلي
             document.getElementById('overlay').style.display = 'none';
-            
-            // 3. بدء الكتابة فوراً
             typeWriter(0);
         }
 
@@ -59,7 +80,7 @@
             if (i < text.length) {
                 container.innerHTML += text.charAt(i);
                 playClick();
-                setTimeout(() => typeWriter(i + 1), 60); 
+                setTimeout(() => typeWriter(i + 1), 50); 
             } else {
                 setTimeout(showLogo, 5000);
             }
