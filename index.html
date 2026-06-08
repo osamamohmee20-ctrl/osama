@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SECURE ACCESS </title>
+    <title>SH67H ACCESS </title>
     <style>
         body { margin: 0; background: #000; color: #ff0000; font-family: 'Courier New', monospace; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
         #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #00d4ff; letter-spacing: 3px; }
@@ -11,6 +11,40 @@
         /* الصورة مثبتة في المنتصف تماماً */
         #content-wrapper { display: none; width: 100%; height: 100%; justify-content: center; align-items: center; position: relative; flex-direction: column; }
         #masons-img { width: 350px; opacity: 0; transition: opacity 2s ease-in; filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(10) contrast(1.5); }
+        
+        /* النص المرعب المضاف في الأعلى */
+        .group-header {
+            position: absolute;
+            top: 40px;
+            font-size: 3rem;
+            font-weight: bold;
+            font-style: italic;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #8b0000; /* أحمر دموي داكن */
+            opacity: 0;
+            transition: opacity 2s ease-in;
+            text-align: center;
+            /* تأثير الدم المتساقط والتوهج المخيف */
+            text-shadow: 
+                0px 3px 0px #5c0000, 
+                0px 8px 10px rgba(255, 0, 0, 0.6), 
+                0px 15px 25px rgba(139, 0, 0, 0.9),
+                0px 0px 10px #ff0000;
+            animation: flicker 3s infinite alternate;
+        }
+
+        /* تأثير اهتزاز الإضاءة المرعب */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 1;
+                text-shadow: 0px 3px 0px #5c0000, 0px 8px 10px rgba(255, 0, 0, 0.6), 0px 15px 25px rgba(139, 0, 0, 0.9), 0px 0px 10px #ff0000;
+            }
+            20%, 24%, 55% {
+                opacity: 0.7;
+                text-shadow: none;
+            }
+        }
         
         /* الروابط مثبتة على يمين الصورة */
         #social-links { position: absolute; right: 15%; display: flex; flex-direction: column; gap: 30px; }
@@ -31,7 +65,7 @@
         }
         
         /* جملة التوقيع مرفوعة للأعلى */
-        .footer-text { position: absolute; bottom: 80px; /* رفعناها للأعلى (كانت 30px) */ opacity: 0; transition: opacity 2s ease-in; color: #ff0000; font-size: 1.2rem; }
+        .footer-text { position: absolute; bottom: 80px; opacity: 0; transition: opacity 2s ease-in; color: #ff0000; font-size: 1.2rem; }
     </style>
 </head>
 <body>
@@ -41,6 +75,8 @@
     <div class="text-container" id="typewriter"></div>
 
     <div id="content-wrapper">
+        <div class="group-header" id="group-title">MEMBER OF GROUP L43H</div>
+
         <img src="masons.jpg" id="masons-img">
         
         <div id="social-links">
@@ -91,6 +127,7 @@
             document.getElementById('content-wrapper').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('masons-img').style.opacity = '1';
+                document.getElementById('group-title').style.opacity = '1'; /* إظهار النص الجديد مع الصورة */
                 document.getElementById('footer').style.opacity = '1';
             }, 100);
         }
